@@ -23,6 +23,8 @@
 #include "clang/Basic/TargetBuiltins.h"
 #include "clang/Frontend/CodeGenOptions.h"
 
+#include <iostream>
+
 using namespace clang;
 using namespace CodeGen;
 
@@ -1951,6 +1953,7 @@ CodeGenFunction::InitializeVTablePointer(BaseSubobject Base,
   VTableField = Builder.CreateBitCast(VTableField, AddressPointPtrTy);
   llvm::StoreInst *Store = Builder.CreateStore(VTableAddressPoint, VTableField);
   CGM.DecorateInstruction(Store, CGM.getTBAAInfoForVTablePtr());
+  std::cout << "Stored a vptr\n";
 }
 
 void
