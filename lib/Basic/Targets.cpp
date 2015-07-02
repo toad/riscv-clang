@@ -4386,6 +4386,15 @@ namespace {
           setFeatureEnabled(Features, "rv32", true);
       }else if(CPU.find("RV64") == 0){
           setFeatureEnabled(Features, "rv64", true);
+      }else if(CPU.startswith("Rocket") || CPU.startswith("LowRISC")) {
+          setFeatureEnabled(Features, "rv64", true);
+          setFeatureEnabled(Features, "m", true);
+          setFeatureEnabled(Features, "a", true);
+          setFeatureEnabled(Features, "f", true);
+          setFeatureEnabled(Features, "d", true);
+          if(CPU.startswith("LowRISC")) {
+              setFeatureEnabled(Features, "tm", true);
+          }
       }
       if(CPU.find("M") != std::string::npos)
         setFeatureEnabled(Features, "m", true);
