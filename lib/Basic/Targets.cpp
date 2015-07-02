@@ -4509,7 +4509,7 @@ namespace {
                                              StringRef Name,
                                              bool Enabled) const {
     if (Name == "m" || Name == "a" || Name == "f" ||
-        Name == "d" || Name == "rv32" || Name == "rv64") { 
+        Name == "d" || Name == "tm" || Name == "rv32" || Name == "rv64") { 
       Features[Name] = Enabled;
       return true;
     }
