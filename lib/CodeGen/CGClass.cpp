@@ -1953,6 +1953,10 @@ CodeGenFunction::InitializeVTablePointer(BaseSubobject Base,
   VTableField = Builder.CreateBitCast(VTableField, AddressPointPtrTy);
   llvm::StoreInst *Store = Builder.CreateStore(VTableAddressPoint, VTableField);
   CGM.DecorateInstruction(Store, CGM.getTBAAInfoForVTablePtr());
+  
+  // Tag the vptr
+  Builder.CreateRISCVSetTag(VTableField, Builder.getInt64(1)); // FIXME use constant.
+
   std::cout << "Stored a vptr\n";
 }
 
