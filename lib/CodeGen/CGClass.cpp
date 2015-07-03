@@ -1955,7 +1955,7 @@ CodeGenFunction::InitializeVTablePointer(BaseSubobject Base,
   CGM.DecorateInstruction(Store, CGM.getTBAAInfoForVTablePtr());
   
   // Tag the vptr
-  Builder.CreateRISCVSetTag(VTableField, Builder.getInt64(1)); // FIXME use constant.
+  Builder.CreateRISCVStoreTag(VTableField, Builder.getInt64(1)); // FIXME use a constant.
 
   std::cout << "Stored a vptr\n";
 }
