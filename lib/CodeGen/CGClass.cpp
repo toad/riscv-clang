@@ -1951,6 +1951,11 @@ CodeGenFunction::InitializeVTablePointer(BaseSubobject Base,
   llvm::Type *AddressPointPtrTy =
     VTableAddressPoint->getType()->getPointerTo();
   VTableField = Builder.CreateBitCast(VTableField, AddressPointPtrTy);
+
+  // Clear the tag (we may overwrite the vptr when constructing a subclass)
+  Builder.CreateRISCVStoreTag(VTableField, Builder.getInt64(0));  
+
+  // Store the vtable pointer.
   llvm::StoreInst *Store = Builder.CreateStore(VTableAddressPoint, VTableField);
   CGM.DecorateInstruction(Store, CGM.getTBAAInfoForVTablePtr());
   
