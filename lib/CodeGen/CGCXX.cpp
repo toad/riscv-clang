@@ -299,7 +299,7 @@ static llvm::Value *BuildVirtualCall(CodeGenFunction &CGF, uint64_t VTableIndex,
   llvm::Value *VTable = CGF.GetVTablePtr(This, Ty);
   llvm::Value *VFuncPtr = 
     CGF.Builder.CreateConstInBoundsGEP1_64(VTable, VTableIndex, "vfn");
-  return CGF.Builder.CreateLoad(VFuncPtr);
+  return CGF.Builder.CreateRISCVLoadTaggedReadOnly(VFuncPtr);
 }
 
 llvm::Value *
@@ -343,7 +343,7 @@ CodeGenFunction::BuildAppleKextVirtualCall(const CXXMethodDecl *MD,
   VTableIndex += AddressPoint;
   llvm::Value *VFuncPtr = 
     Builder.CreateConstInBoundsGEP1_64(VTable, VTableIndex, "vfnkxt");
-  return Builder.CreateLoad(VFuncPtr);
+  return Builder.CreateRISCVLoadTaggedReadOnly(VFuncPtr);
 }
 
 /// BuildVirtualCall - This routine makes indirect vtable call for
@@ -377,7 +377,7 @@ CodeGenFunction::BuildAppleKextVirtualDestructorCall(
     VTableIndex += AddressPoint;
     llvm::Value *VFuncPtr =
       Builder.CreateConstInBoundsGEP1_64(VTable, VTableIndex, "vfnkxt");
-    Callee = Builder.CreateLoad(VFuncPtr);
+    Callee = Builder.CreateRISCVLoadTaggedReadOnly(VFuncPtr);
   }
   return Callee;
 }
