@@ -1961,7 +1961,7 @@ CodeGenFunction::InitializeVTablePointer(BaseSubobject Base,
   
   // Tag the vptr
   Builder.CreateRISCVStoreTag(VTableField, 
-    Builder.getInt64(LowRISCMemoryTag.READ_ONLY));
+    Builder.getInt64(LowRISCMemoryTag.CLEAN));
 
   std::cout << "Stored a vptr\n";
 }
