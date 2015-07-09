@@ -159,6 +159,11 @@ static void addBoundsCheckingPass(const PassManagerBuilder &Builder,
   PM.add(createBoundsCheckingPass());
 }
 
+static void addLowRISCTagCodePointersPass(const PassManagerBuilder &Builder,
+                                    PassManagerBase &PM) {
+  PM.add(createLowRISCTagCodePointersPass());
+}
+
 static void addAddressSanitizerPasses(const PassManagerBuilder &Builder,
                                       PassManagerBase &PM) {
   const PassManagerBuilderWrapper &BuilderWrapper =
@@ -261,6 +266,12 @@ void EmitAssemblyHelper::CreatePasses(TargetMachine *TM) {
                            addThreadSanitizerPass);
     PMBuilder.addExtension(PassManagerBuilder::EP_EnabledOnOptLevel0,
                            addThreadSanitizerPass);
+  }
+  
+  if (LangOpts.Sanitize.LowRISCTagCodePointers) {
+    // FIXME check target platform
+    PMBuilder.addExtension(PassManagerBuilder::EP_EarlyAsPossible,
+                           addLowRISCTagCodePointersPass);
   }
 
   // Figure out TargetLibraryInfo.
