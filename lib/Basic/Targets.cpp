@@ -4374,6 +4374,10 @@ namespace {
 
       Builder.defineMacro("__riscv64");
       // Target properties
+      if(CPU == "LowRISC") {
+          Builder.defineMacro("__lowrisc__");
+          Builder.defineMacro("__TAGGED_MEMORY__");
+      }
     }
     virtual void getTargetBuiltins(const Builtin::Info *&Records,
                                    unsigned &NumRecords) const {
